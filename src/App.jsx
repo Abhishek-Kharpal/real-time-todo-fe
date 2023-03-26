@@ -14,9 +14,12 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
+import io from 'socket.io-client';
 import Todo from './components/todo';
 import BACKEND_URL from './config';
 import './App.css';
+
+const socket = io('http://localhost:3001');
 /**
  * @return {JSX.Element}
  * @description
@@ -40,6 +43,10 @@ function App() {
       setTodos([]);
     }
   }, []);
+
+  socket.on('addTodo', (todo)=>{
+    setTodos([...todos, todo]);
+  });
 
   const handleAddTodo = () => {
     try {
