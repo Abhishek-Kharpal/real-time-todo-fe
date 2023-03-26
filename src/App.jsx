@@ -3,7 +3,16 @@ import axios from 'axios';
 import Header from './components/Header';
 import {ThemeProvider} from '@mui/material/styles';
 import theme from './components/theme';
-import {Fab, Box, Typography} from '@mui/material';
+import {
+  Fab,
+  Box,
+  Typography,
+  Dialog,
+  IconButton,
+  TextField,
+  Button,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import Todo from './components/todo';
 import BACKEND_URL from './config';
@@ -16,6 +25,11 @@ import './App.css';
  */
 function App() {
   const [todos, setTodos] = useState([]);
+  const [addTodo, setAddTodo] = useState(false);
+  const [todo, setTodo] = useState({
+    title: '',
+    content: '',
+  });
 
   useEffect(() => {
     try {
@@ -27,8 +41,21 @@ function App() {
     }
   }, []);
 
+  const handleAddTodo = () => {
+    try {
+      axios.post(`${BACKEND_URL}/api/todos`, todo).then((response) => {
+        setTodos([...todos, response.data]);
+        setAddTodo(false);
+      });
+    } catch (error) {
+      console.err(error);
+      setAddTodo(false);
+    }
+  };
+
+
   return (todos)?(
-    <Box className="App" sx={{backgroundColor: '#f5f5f5', height: '100vh'}}>
+    <Box className="App" sx={{height: '100vh'}}>
       <ThemeProvider theme={theme}>
         <Header />
         <Fab
@@ -37,11 +64,25 @@ function App() {
           color="primary"
           aria-label="add"
           sx={{position: 'absolute', bottom: 16, right: 16}}
+          onClick={() => setAddTodo(true)}
         >
           <AddIcon />
         </Fab>
-        <Box sx={{display: 'flex', justifyContent: 'center', mt: 5}}>
-          <Box sx={{maxWidth: '720px'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 5,
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: '880px',
+              flexGrow: 1,
+              backgroundColor: '#f5f5f5',
+              height: '100vh',
+            }}
+          >
             {
               todos.map((todo) => {
                 return <Todo
@@ -53,6 +94,85 @@ function App() {
             }
           </Box>
         </Box>
+        {
+          (addTodo)&&(
+            <Dialog
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+              open={addTodo}
+              onClose={() => setAddTodo(false)}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  p: 2,
+                  width: 'max(25vw, 340px)',
+                  flexGrow: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography variant='h6'>Add Todo</Typography>
+                  <IconButton onClick={() => setAddTodo(false)}>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: 1,
+                  }}
+                >
+                  <TextField
+                    sx={{mt: 2}}
+                    label="Title"
+                    variant="outlined"
+                    value={todo.title}
+                    onChange={(e) => setTodo({
+                      ...todo,
+                      title: e.target.value,
+                    })}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: 1,
+                  }}
+                >
+                  <TextField
+                    sx={{mt: 2}}
+                    label="Content"
+                    variant="outlined"
+                    value={todo.content}
+                    onChange={(e) => setTodo({
+                      ...todo,
+                      content: e.target.value,
+                    })}
+                  />
+                </Box>
+                <Button
+                  sx={{mt: 2}}
+                  variant="contained"
+                  onClick={handleAddTodo}
+                >
+                  POST
+                </Button>
+              </Box>
+            </Dialog>
+          )
+        }
       </ThemeProvider>
     </Box>
   ):(
