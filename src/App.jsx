@@ -80,7 +80,7 @@ function App() {
               maxWidth: '880px',
               flexGrow: 1,
               backgroundColor: '#f5f5f5',
-              height: '100vh',
+              padding: '16px',
             }}
           >
             {
