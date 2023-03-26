@@ -3,9 +3,9 @@ import './App.css';
 import Header from './components/Header';
 import {ThemeProvider} from '@mui/material/styles';
 import theme from './components/theme';
-import {Fab} from '@mui/material';
+import {Fab, Box} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
+import Todo from './components/todo';
 /**
  * @return {JSX.Element}
  * @description
@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
  */
 function App() {
   return (
-    <div className="App">
+    <Box className="App" sx={{backgroundColor: '#f5f5f5', height: '100vh'}}>
       <ThemeProvider theme={theme}>
         <Header />
         <Fab
@@ -26,8 +26,13 @@ function App() {
         >
           <AddIcon />
         </Fab>
+        <Box sx={{display: 'flex', justifyContent: 'center', mt: 5}}>
+          <Box sx={{maxWidth: '720px'}}>
+            <Todo />
+          </Box>
+        </Box>
       </ThemeProvider>
-    </div>
+    </Box>
   );
 }
 
