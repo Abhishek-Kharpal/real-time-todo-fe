@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 /**
  *
@@ -12,7 +13,7 @@ import Typography from '@mui/material/Typography';
  * @description
  * This returns a todo card which contains the details of the todo.
  */
-function Todo() {
+function Todo({title, content, id}) {
   return (
     <Box
       sx={{
@@ -21,16 +22,16 @@ function Todo() {
       }}
     >
       <Box sx={{maxWidth: '720px'}}>
-        <Card sx={{minWidth: 275}}>
+        <Card sx={{minWidth: '275px', mt: 8}}>
           <CardContent>
             <Typography variant="h5" component="div">
-              Title
+              {title}
             </Typography>
             <Typography variant="body2">
-              Card ID
+              Card ID: {id}
               <br />
               <br/>
-              {'content'}
+              {content}
             </Typography>
           </CardContent>
           <CardActions
@@ -46,6 +47,12 @@ function Todo() {
       </Box>
     </Box>
   );
+};
+
+Todo.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.string,
+  id: PropTypes.number,
 };
 
 export default Todo;
