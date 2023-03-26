@@ -3,6 +3,8 @@ import './App.css';
 import Header from './components/Header';
 import {ThemeProvider} from '@mui/material/styles';
 import theme from './components/theme';
+import {Fab} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 /**
  * @return {JSX.Element}
@@ -15,6 +17,15 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Header />
+        <Fab
+          variant='extended'
+          size="large"
+          color="primary"
+          aria-label="add"
+          sx={{position: 'absolute', bottom: 16, right: 16}}
+        >
+          <AddIcon />
+        </Fab>
       </ThemeProvider>
     </div>
   );
