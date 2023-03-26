@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header';
+import {ThemeProvider} from '@mui/material/styles';
+import theme from './components/theme';
 
 /**
  * @return {JSX.Element}
@@ -10,7 +13,9 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      Hello World
+      <ThemeProvider theme={theme}>
+        <Header />
+      </ThemeProvider>
     </div>
   );
 }
