@@ -13,7 +13,7 @@ This repository contains front end code and documentation for TODO application w
 
 1. Clone the repository
 2. Run `npm install --force` to install all the dependencies (since better docs is not compatible with latest version of react)
-3. Run `npm start` to start the server
+3. Run `npm run dev` to start the server
 4. Open `http://localhost:5173` in your browser
 
 ## TECHNOLOGIES USED
